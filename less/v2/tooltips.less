@@ -1,0 +1,238 @@
+:is(#tooltip, .locked-tooltip) {
+  &.daggerheart-tooltip {
+    font-family: var(--daggerheart-font-roboto);
+    font-size: var(--font-size-13);
+    text-align: start;
+    color: var(--color-text-dark-primary);
+    border-radius: 5px;
+    padding: 6px 8px;
+    background: url("ui/texture-gray1.webp") no-repeat top left,
+      url("ui/texture-gray2.webp") no-repeat bottom right,
+      var(--daggerheart-color-parchment);
+    box-shadow: 0 0 16px var(--daggerheart-shadow-45);
+    border: var(--daggerheart-border-gold);
+    border-width: 2px;
+
+    .content { padding: 0 .5rem .25rem; }
+
+    h1, h2, h3, h4 {
+      line-height: normal;
+      text-shadow: none;
+      color: var(--color-text-dark-primary);
+    }
+
+    .header {
+      h2 {
+        margin: 0;
+        border: none;
+        font-family: var(--daggerheart-font-roboto-slab);
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+    }
+
+    h3 {
+      font-size: 1.25em;
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+  }
+
+  &.locked-tooltip {
+    z-index: calc(var(--z-index-tooltip) - 1);
+
+    &.daggerheart-tooltip::after {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border: var(--daggerheart-border-gold);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .lock-hint { display: none; }
+  }
+
+  /* ---------------------------------- */
+  /*  Item Tooltips                     */
+  /* ---------------------------------- */
+
+  &:is(.item-tooltip, .effect-tooltip) {
+    width: 300px;
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      padding: .75rem;
+      font-size: var(--font-size-24);
+      opacity: .25;
+    }
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      padding-top: .75rem;
+
+      .top {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: .75rem;
+
+        .subtitle { font-size: var(--font-size-11); }
+      }
+
+      img {
+        width: 64px;
+        height: 64px;
+        border: 4px solid var(--daggerheart-color-gold);
+        box-shadow: 0 0 4px var(--daggerheart-shadow-45);
+        border-radius: 100%;
+        object-fit: cover;
+        background: var(--daggerheart-color-light-gray);
+      }
+
+      .bottom {
+        display: flex;
+        font-size: var(--font-size-11);
+        color: var(--color-text-dark-5);
+      }
+
+      .weight, .price {
+        width: 70px;
+        display: flex;
+        align-items: center;
+        gap: .25rem;
+
+        span { height: 14px; }
+      }
+
+      .weight {
+        justify-content: end;
+        i { font-size: var(--font-size-9); }
+      }
+
+      .charges {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .25rem;
+      }
+
+      .school {
+        position: absolute;
+        top: .75rem;
+        right: .75rem;
+        --icon-fill: var(--daggerheart-color-gold);
+        --icon-size: 32px;
+      }
+    }
+
+    .description {
+      text-align: left;
+      font-size: var(--font-size-12);
+      line-height: normal;
+      max-height: 450px;
+      overflow: hidden;
+      padding-right: .5rem;
+      margin-right: -.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--daggerheart-color-gold) transparent;
+
+      table { display: none; }
+
+      &.overflowing { mask-image: linear-gradient(to bottom, black 90%, transparent); }
+      &:empty { margin-bottom: .5rem; }
+    }
+
+    &.locked-tooltip {
+      .description {
+        overflow-y: scroll;
+        &.overflowing { mask-image: unset; }
+      }
+    }
+
+    .pill {
+      font-size: var(--font-size-10);
+      padding: .1875rem .375rem;
+      line-height: 1;
+    }
+  }
+
+  /* ---------------------------------- */
+  /*  Passive Tooltips                  */
+  /* ---------------------------------- */
+
+  &.passive-tooltip {
+    max-width: unset;
+
+    .header {
+      margin-block: 6px 10px;
+    }
+
+    .party {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 20px;
+
+      .member {
+        display: grid;
+        grid-template-columns: max-content 140px 20px max-content;
+        align-items: center;
+        gap: 4px;
+      }
+      img {
+        width: 38px;
+        height: 38px;
+        border: 2px solid var(--daggerheart-color-gold);
+        box-shadow: 0 0 4px var(--daggerheart-shadow-45);
+        border-radius: 100%;
+        object-fit: cover;
+        object-position: top;
+        background: var(--daggerheart-color-light-gray);
+      }
+      .name {
+        padding-inline-start: 4px;
+        font-size: var(--font-size-14);
+        font-family: var(--daggerheart-font-roboto-slab);
+        font-weight: bold;
+      }
+      .passive {
+        font-weight: bold;
+        text-align: end;
+      }
+      .status {
+        font-family: var(--font-awesome);
+        font-weight: 900;
+
+        &.success::after {
+          content: "\f058";
+          color: var(--daggerheart-color-success);
+        }
+        &.failure::after {
+          content: "\f057";
+          color: var(--daggerheart-color-failure);
+        }
+      }
+    }
+  }
+
+  /* ---------------------------------- */
+  /*  Rule Tooltips                     */
+  /* ---------------------------------- */
+
+  &.rule-tooltip {
+    max-width: 450px;
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-block: 6px 10px;
+    }
+  }
+}

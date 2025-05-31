@@ -1,0 +1,61 @@
+.daggerheart-flag-high-contrast .daggerheart2.sheet.actor.character,
+.daggerheart2.sheet.actor.character.daggerheart-flag-high-contrast {
+  .sidebar {
+    .card {
+      .stats .lozenges .lozenge .value {
+        text-shadow: 0 0 2px var(--daggerheart-color-dark);
+        filter: drop-shadow(0 0 2px var(--daggerheart-color-dark));
+      }
+      .meter.sectioned > .tmp > input::placeholder { color: var(--color-text-light-6); }
+    }
+    .favorites > ul .drop { opacity: .5; }
+  }
+
+  .skills, .tools {
+    > ul > li { border-bottom: var(--daggerheart-border-dark); }
+    .ability, .passive { color: var(--color-text-dark-primary); }
+  }
+  .saves {
+    > ul > li {
+      --border-style: var(--daggerheart-border-dark);
+      &:nth-child(odd) { border-inline-end: var(--border-style); }
+    }
+  }
+
+  .pill-lg {
+    &.empty:hover { opacity: 1; }
+    &.texture::before { --gradient-end: color-mix(in oklab, var(--daggerheart-background-card), transparent 40%); }
+  }
+
+  .trait-scores .trait-score {
+    &::before { background: transparent url("ui/trait-score-tab-hc.svg") no-repeat top center / contain; }
+    .label { color: var(--daggerheart-color-dark); }
+    .score { color: var(--color-text-light-1); }
+  }
+}
+
+/* ---------------------------------- */
+/*  Light Mode                        */
+/* ---------------------------------- */
+
+.daggerheart-flag-high-contrast:is(.daggerheart-theme-light, .theme-dark) .daggerheart2.sheet.actor.character,
+.daggerheart2.sheet.actor.character.daggerheart-flag-high-contrast.daggerheart-theme-light {
+  .sheet-header { background: var(--daggerheart-color-maroon); }
+  .sidebar .favorites > h3 { color: var(--daggerheart-color-dark); }
+  .tab.features .classes .class .level > span { color: var(--daggerheart-color-dark); }
+}
+
+/* ---------------------------------- */
+/*  Dark Mode                         */
+/* ---------------------------------- */
+
+.daggerheart-flag-high-contrast:is(.daggerheart-theme-dark, .theme-dark) .daggerheart2.sheet.actor.character,
+.daggerheart2.sheet.actor.character.daggerheart-flag-high-contrast.daggerheart-theme-dark {
+  .sheet-header { background: none; }
+  .sidebar .favorites > h3 { color: var(--daggerheart-color-light); }
+  .tab.features .classes .class .level > span { color: var(--daggerheart-color-light); }
+  .ability-scores .ability-score {
+    &::before { filter: invert(100%); }
+    .label { color: var(--color-text-light-1); }
+  }
+}

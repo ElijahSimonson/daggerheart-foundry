@@ -1,0 +1,280 @@
+.activity.sheet {
+  max-block-size: 85vh;
+  .window-content { overflow-y: auto; }
+
+  .additional-tray {
+    margin-block-start: 4px;
+    transition: all 250ms ease;
+
+    &.collapsed { margin-block-end: -2px; }
+
+    .wrapper {
+      padding-inline: 6px;
+      > :first-child { margin-block-start: 8px; }
+      > :last-child { margin-block-end: 3px; }
+    }
+
+    > label {
+      cursor: var(--cursor-pointer);
+      display: flex;
+      justify-content: center;
+      gap: .25rem;
+      font-size: var(--font-size-10);
+
+      > span { flex: none; }
+      .fa-gears { color: var(--color-text-light-6); }
+
+      &::before, &::after {
+        content: "";
+        flex-basis: 50%;
+        border-top: 1px dotted var(--daggerheart-color-gold);
+        align-self: center;
+      }
+    }
+  }
+  .separated-list {
+    margin-top: 4px;
+    > li {
+      padding: 6px;
+      border: var(--daggerheart-border-gold);
+      box-shadow: 0 0 6px var(--daggerheart-shadow-15);
+
+      &.empty {
+        border: none;
+        box-shadow: none;
+        font-style: italic;
+        color: var(--color-text-dark-5);
+        padding-block: 0;
+      }
+
+      .list-controls button.control-button { --size: 24px; }
+    }
+    .details { align-items: stretch; }
+    .content-link {
+      display: block;
+      align-content: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: normal;
+    }
+    .name { flex: 1 0 175px; }
+    .drop-area {
+      border: 1px dashed var(--color-border-light-2);
+      border-radius: 4px;
+      padding-inline: 4px;
+    }
+    .gold-icon {
+      flex: 0 0 24px;
+      height: 24px;
+      border-width: 1px;
+    }
+
+    &.enchantments > li { padding-top: 9px; }
+
+    .split-group.full-width {
+      padding: 0;
+      box-shadow: none;
+
+      > .form-fields { align-items: end; }
+
+      .sep {
+        height: var(--form-field-height);
+        display: grid;
+        place-content: center;
+        padding: 0 1px;
+      }
+    }
+  }
+}
+
+/* ----------------------------------------- */
+/*  Cast Activity                            */
+/* ----------------------------------------- */
+
+.cast-activity.sheet .spell-details {
+  margin-block-end: 0;
+  document-tags {
+    row-gap: 0;
+    input { font-size: var(--font-size-11); }
+  }
+}
+
+/* ----------------------------------------- */
+/*  Summon Activity                          */
+/* ----------------------------------------- */
+
+.summon-activity.sheet .separated-list:not(.effects-list) {
+  .content-link, .drop-area, .name {
+    display: flex;
+    align-items: center;
+    align-content: center;
+  }
+
+  .drop-area {
+    justify-content: center;
+    font-size: var(--font-size-11);
+    font-style: italic;
+    height: var(--form-field-height);
+    color: var(--color-text-dark-5);
+  }
+
+  .content-link {
+    height: var(--form-field-height);
+    text-align: center;
+    border: 1px dashed var(--color-border-light-2);
+    border-radius: 4px;
+    font-size: var(--font-size-11);
+  }
+
+  .form-fields > .sep { flex: none; }
+}
+
+/* ----------------------------------------- */
+/*  Usage Dialog                             */
+/* ----------------------------------------- */
+
+.activity-usage {
+  .scaling-fields {
+    .separator, .max {
+      flex: 0;
+      padding-inline: 3px;
+      font-weight: bold;
+    }
+    .separator { color: var(--daggerheart-color-gold); }
+  }
+  i.warning { color: var(--daggerheart-color-failure); }
+  .hint code {
+    background: none;
+    border: none;
+    color: var(--daggerheart-color-crimson);
+    font-size: inherit;
+    padding: 0;
+  }
+  [data-application-part="consumption"] .form-group:not(.label-top) > label { flex: 4; }
+  [data-application-part=order] {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .description {
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--daggerheart-font-roboto-condensed);
+    font-size: var(--font-size-16);
+  }
+  fieldset.harvesting {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+
+    > ul { flex: 1 }
+
+    .quantity {
+      flex: 0 0 60px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .separator { color: var(--color-text-dark-5); }
+    }
+  }
+
+  .animals .animal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* ---------------------------------- */
+/*  Choice Dialog                     */
+/* ---------------------------------- */
+
+.activity-choice menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  button {
+    --button-size: 38px;
+    --icon-fill: var(--color-text-dark-primary);
+    --icon-size: 24px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 6px 56px 6px 6px;
+
+    > .name {
+      flex: 1;
+      text-transform: none;
+      font-family: var(--daggerheart-font-roboto-slab);
+      line-height: normal;
+      font-size: var(--font-size-14);
+    }
+
+    > .icon {
+      flex: 0 0 50px;
+      height: 24px;
+      text-align: left;
+    }
+
+    .gold-icon {
+      border-width: 1px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+/* ---------------------------------- */
+/*  Chat Cards                        */
+/* ---------------------------------- */
+
+.daggerheart2.chat-card {
+  .order-description {
+    padding: 8px;
+    text-align: center;
+
+    + .order-description { margin-top: -.5em; }
+  }
+
+  .bastion-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .order-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: var(--font-size-12);
+  }
+
+  .item-summary {
+    display: flex;
+    gap: 4px;
+
+    li {
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
+      border: var(--daggerheart-border-gold);
+      border-radius: 3px;
+      overflow: hidden;
+      cursor: var(--cursor-pointer);
+
+      > img {
+        pointer-events: none;
+        border: none;
+        width: 100%;
+        height: 100%;
+        max-width: unset;
+        object-fit: cover;
+        background: var(--daggerheart-color-iron-gray);
+      }
+    }
+  }
+}

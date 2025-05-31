@@ -1,0 +1,34 @@
+:is(.daggerheart-theme-dark, .theme-dark) .daggerheart2,
+.daggerheart2.daggerheart-theme-dark {
+  .items-section {
+    border: none;
+
+    .item {
+      .item-name .tags {
+        --icon-fill: var(--color-text-light-6);
+        opacity: unset;
+      }
+
+      .item-controls .item-control {
+        color: var(--daggerheart-color-blue-gray-3);
+        &.always-interactive { color: var(--color-text-light-6); }
+        &.active { color: var(--daggerheart-color-gold); }
+      }
+
+      .item-summary { background: transparent; }
+    }
+
+    .item-controls .info-control { color: var(--daggerheart-color-gold); }
+
+    .activities .activity-row {
+      border-color: var(--daggerheart-color-blue-gray-4);
+      &:last-child { border-color: var(--daggerheart-color-blue-gray-4); }
+      .activity-image { --icon-fill: var(--daggerheart-color-gold); }
+      &::before { color: var(--daggerheart-color-blue-gray-3); }
+    }
+  }
+
+  &.editable, .editable {
+    .items-section .item-controls .item-control { color: var(--color-text-light-6); }
+  }
+}

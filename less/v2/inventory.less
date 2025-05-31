@@ -1,0 +1,616 @@
+.daggerheart2 .inventory-element {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  /* ------------------------------------ */
+  /*  Searching & Filtering, & Attunement */
+  /* ------------------------------------ */
+
+  .middle {
+    display: flex;
+    gap: .5rem;
+
+    item-list-controls { flex: 1; }
+
+    .attunement {
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+      background: var(--daggerheart-background-card);
+      border-radius: 4px;
+      box-shadow: 0 0 6px var(--daggerheart-shadow-45);
+      border: var(--daggerheart-border-gold);
+      padding: 0 .875rem 0 .5rem;
+      font-weight: bold;
+
+      .fa-sun, .separator { color: var(--daggerheart-color-gold); }
+      .config-button { color: var(--color-text-light-6); }
+      .max { color: var(--color-text-dark-5); }
+
+      input.max {
+        width: 22px;
+        text-align: center;
+        font-weight: bold;
+        background: var(--daggerheart-background-5);
+        border: none;
+        padding: 0;
+        transition: box-shadow 250ms ease;
+
+        &:focus-visible, &:hover { box-shadow: 0 0 6px var(--daggerheart-color-gold); }
+      }
+    }
+  }
+
+  /* ---------------------------------- */
+  /*  Spell Slots                       */
+  /* ---------------------------------- */
+
+  .spells-list .items-section {
+    position: relative;
+
+    .pips {
+      position: absolute;
+      right: .5rem;
+      top: -.5rem;
+      display: flex;
+      align-items: center;
+      padding: 0;
+      gap: 1px;
+
+      .pip {
+        border: none;
+        background: none;
+        --icon-size: 13px;
+        --icon-fill: var(--daggerheart-color-light-gray);
+        box-shadow: none;
+        filter: drop-shadow(0 0 1px var(--daggerheart-color-black));
+
+        &.tmp.filled {
+          --icon-fill: var(--daggerheart-color-sc-2);
+          --icon-stroke: var(--daggerheart-color-sc-2)
+        }
+        &.tmp:hover { filter: drop-shadow(0 0 2px var(--daggerheart-color-sc-2)); }
+        &.filled { --icon-fill: var(--daggerheart-color-gold); }
+        &:focus { background: none; }
+        &:hover {
+          background: none;
+          filter: drop-shadow(0 0 2px var(--daggerheart-color-gold));
+        }
+      }
+    }
+  }
+}
+
+/* ---------------------------------- */
+/*  Entries                           */
+/* ---------------------------------- */
+
+.daggerheart2 {
+
+  .items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    container-type: inline-size;
+  }
+
+  /* Sections / Categories */
+  .items-section {
+
+    .items-header, .item {
+      &[hidden] { display: none; }
+      .condensed { font-family: var(--daggerheart-font-roboto-condensed); }
+
+      .item-row {
+        display: flex;
+        align-items: stretch;
+      }
+
+      .item-name {
+        flex: 1;
+        display: flex;
+        gap: .5rem;
+        align-items: center;
+        line-height: 1;
+        position: relative;
+
+        &:not(h3) { padding: .25rem; }
+
+        &.rollable {
+          cursor: var(--cursor-pointer);
+          &:hover .title { text-shadow: 0 0 8px var(--color-shadow-primary); }
+        }
+
+        .title {
+          transition: text-shadow 250ms ease;
+          font-size: var(--font-size-13);
+        }
+
+        &.activity-name .title { font-size: var(--font-size-12); }
+
+        .name { flex: 1; }
+
+        .tags {
+          opacity: .25;
+          font-size: var(--font-size-14);
+          display: flex;
+          align-items: center;
+          gap: .25rem;
+          --icon-fill: var(--daggerheart-color-black);
+        }
+
+        > .concentration {
+          position: absolute;
+          inset: .25rem auto .25rem .25rem;
+          width: 32px;
+          font-size: var(--font-size-24);
+          display: grid;
+          place-content: center;
+          color: var(--daggerheart-color-gold);
+          opacity: .5;
+          @media (prefers-reduced-motion) { animation: none; }
+        }
+      }
+
+      .item-header {
+        font-family: var(--daggerheart-font-roboto-condensed);
+        text-transform: uppercase;
+        font-size: var(--font-size-11);
+      }
+
+      .item-detail, .item-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        &.hidden-width, &.hidden-column {
+          &:not(.always-visible) { display: none; }
+        }
+      }
+
+      .item-detail.empty::after {
+        content: "–";
+        color: var(--color-text-light-6);
+        font-weight: normal;
+      }
+
+      /* Item Image */
+      .item-image {
+        width: 32px;
+        height: 32px;
+        object-fit: cover;
+        min-width: 32px;
+        min-height: 32px;
+
+        &.activity-image {
+          --icon-size: 24px;
+          --icon-fill: var(--color-text-dark-primary);
+          width: 24px;
+          height: 24px;
+          min-width: 24px;
+          min-height: 24px;
+          border-width: 1px;
+          border-radius: 3px;
+        }
+      }
+
+      /* Item Weight & Price */
+      .item-weight, .item-price {
+        gap: .25rem;
+
+        i {
+          font-size: var(--font-size-9);
+          color: var(--color-text-light-6);
+        }
+      }
+
+      .item-weight { width: 60px; }
+      .item-source { width: 120px; }
+
+      .item-price {
+        width: 80px;
+        justify-content: end;
+        padding-right: .5rem;
+      }
+
+      /* Item Quantity & Uses */
+      .item-quantity, .item-uses, .item-charges {
+        width: 70px;
+        justify-content: space-evenly;
+
+        i { font-size: var(--font-size-11); }
+
+        input {
+          background: none;
+          border: none;
+          padding: 0;
+          font-weight: bold;
+          transition: box-shadow 250ms ease;
+
+          &:focus-visible, &:hover { box-shadow: 0 0 6px var(--daggerheart-color-gold); }
+        }
+      }
+
+      .item-quantity input {
+        text-align: center;
+        width: 30px;
+      }
+
+      .item-uses, .item-charges {
+        gap: unset;
+        &.item-detail { font-weight: bold; }
+        .max, input { width: 20px; }
+        .separator { color: var(--daggerheart-color-gold); }
+        .max {
+          color: var(--color-text-dark-5);
+          text-align: start;
+        }
+        input { text-align: end; }
+        i.fa-bolt { color: var(--daggerheart-color-gold); }
+      }
+
+      /* Item Recovery */
+      .item-recovery { width: 60px; }
+
+      /* Spell School, Cast Time, & To Hit / DC */
+      .item-school, .item-time, .item-roll { width: 40px; }
+
+      /* Capacity */
+      .item-capacity {
+        width: 200px;
+
+        .meter {
+          width: 100%;
+          height: 25px;
+
+          i { font-size: var(--font-size-9); }
+        }
+      }
+
+      .item-school {
+        --icon-fill: var(--daggerheart-color-gold);
+        --icon-size: 18px;
+      }
+
+      .item-roll {
+        .stacked {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .value { font-size: var(--font-size-13); }
+        }
+
+        &.item-detail { font-weight: bold; }
+        .value { font-size: var(--font-size-14); }
+        .sign { color: var(--color-text-light-6); }
+
+        .ability {
+          text-transform: uppercase;
+          font-size: var(--font-size-10);
+          color: var(--daggerheart-color-gold);
+        }
+      }
+
+      /* Spell Range */
+      .item-range {
+        width: 50px;
+        display: block;
+        align-self: center;
+
+        .integer { font-weight: bold; }
+
+        .unit {
+          color: var(--color-text-light-6);
+          font-size: var(--font-size-12);
+        }
+      }
+
+      /* Spell Target & Formula */
+      .item-target, .item-formula { width: 80px; }
+
+      .item-formula {
+        flex-direction: column;
+
+        daggerheart-icon {
+          font-size: var(--font-size-14);
+          --icon-fill: var(--color-text-dark-5);
+        }
+
+        .row {
+          display: flex;
+          gap: .1875rem;
+        }
+      }
+
+      .item-formula { display: flex; }
+
+      /* Effect Duration */
+      .effect-name {
+        .name { flex: 1; }
+      }
+
+      /* Effect Source */
+      .effect-source {
+        width: 150px;
+        border: none;
+
+        &.item-detail {
+          color: var(--color-text-dark-5);
+        }
+      }
+
+      /* Item Controls */
+      .item-controls {
+        width: 70px;
+        align-items: stretch;
+        justify-content: center;
+        gap: 4px;
+        color: var(--color-text-light-6);
+        padding: 0 38px 0 4px;
+        position: relative;
+
+        > .control-button {
+          color: var(--color-text-light-6);
+        }
+
+        .item-control {
+          display: flex;
+          align-items: center;
+          font-size: var(--font-size-11);
+          color: var(--color-text-light-6);
+        }
+        .item-control.active { color: var(--daggerheart-color-black); }
+
+        &.item-detail .radio-button {
+          background: none;
+          &[aria-pressed="true"]::before { background: var(--color-border-dark-5); }
+        }
+
+        [data-context-menu], [data-toggle-description] {
+          position: absolute;
+          inset: 0 0 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: end;
+          padding: 0 10px 0 5px;
+        }
+
+        [data-toggle-description] {
+          right: 20px;
+          padding: 0;
+        }
+      }
+
+      /* Effect Controls */
+      .item-header.effect-controls {
+        padding-right: .75rem;
+        justify-content: end;
+        color: var(--color-text-light-0);
+        align-items: center;
+      }
+
+      /* Item Description */
+      .item-description .item-summary {
+        font-family: var(--daggerheart-font-roboto);
+        font-size: var(--font-size-11);
+        padding: 1px 8px 8px;
+        background: var(--daggerheart-color-parchment);
+        .item-properties { padding-top: 7px; }
+        > * + .item-properties { padding-top: 0; }
+      }
+    }
+
+    .items-header {
+      display: flex;
+      align-items: stretch;
+
+      .config-button {
+        position: absolute;
+        inset: .5rem 1.5rem auto auto;
+        color: var(--daggerheart-color-gold);
+        font-size: var(--font-size-12);
+      }
+
+      .item-price {
+        justify-content: center;
+        padding: 0;
+      }
+
+      h3 { color: inherit; }
+    }
+
+    .item {
+      border-bottom: var(--daggerheart-border-dotted);
+      &:last-child { border: none; }
+    }
+
+    .effect {
+      display: flex;
+      align-items: stretch;
+    }
+
+    .activities .activity-row {
+      position: relative;
+      border-top: 1px dotted #ddd;
+      padding-left: 20px;
+
+      &:last-child { border-bottom: 1px dotted #ddd; }
+
+      &::before {
+        content: "┗";
+        position: absolute;
+        inset: 9px auto auto 5px;
+        font-size: var(--font-size-12);
+        font-weight: bold;
+        color: var(--color-text-light-6);
+      }
+    }
+  }
+
+  .effect-name .duration, &.effect-tooltip .duration {
+    padding: .25rem;
+    border: 1px dashed var(--color-border-light-1);
+    border-radius: 4px;
+    font-family: var(--daggerheart-font-roboto-condensed);
+    text-transform: uppercase;
+    font-size: var(--font-size-11);
+    color: var(--color-text-dark-5);
+
+    .separator, .least-significant { color: var(--color-text-light-6); }
+  }
+}
+
+/* ---------------------------------- */
+/*  Currency                          */
+/* ---------------------------------- */
+
+.daggerheart2 section.currency, .daggerheart2 .currency-style {
+  display: flex;
+  gap: 8px;
+
+  label {
+    position: relative;
+
+    i {
+      display: inline-block;
+      position: absolute;
+      inset: -2px auto auto -2px;
+      filter: drop-shadow(0 0 1px black);
+    }
+  }
+
+  input, button {
+    border: var(--daggerheart-border-gold);
+    background: var(--daggerheart-background-parchment);
+    box-shadow: 0 0 6px var(--daggerheart-shadow-15);
+
+    &:hover, &:focus {
+      box-shadow: 0 0 6px var(--daggerheart-color-gold);
+      border: 1px solid var(--daggerheart-color-gold);
+    }
+  }
+
+  input {
+    border-radius: 6px;
+    padding: .375rem .5rem .3755rem 1rem;
+    text-align: right;
+    font-family: var(--daggerheart-font-roboto);
+    font-weight: bold;
+    font-size: var(--font-size-11);
+    max-width: 80px;
+  }
+
+  button {
+    border-radius: 4px;
+    width: 30px;
+    color: var(--color-text-dark-5);
+  }
+}
+
+/* ---------------------------------- */
+/*  Locked                            */
+/* ---------------------------------- */
+
+.daggerheart2 .locked .inventory-element {
+  .item :is(.item-quantity, .item-uses, .item-charges) input:is(:focus-visible, :hover) { box-shadow: none; }
+}
+
+/* ---------------------------------- */
+/*  Edit Mode                         */
+/* ---------------------------------- */
+
+.daggerheart2 .editable .inventory-element {
+  .middle .attunement { padding-right: 0; }
+  .items-section .pips { display: none; }
+}
+
+/* ---------------------------------- */
+/*  Award & Currency                  */
+/* ---------------------------------- */
+
+.daggerheart2:is(.award, .currency-manager) {
+  --award-gap: 8px;
+
+  [data-tab="convert"] p {
+    font-size: var(--font-size-14);
+    margin: 0;
+    padding-inline: 4px;
+  }
+
+  .xp {
+    flex-direction: column;
+    gap: 0;
+    margin-block-end: var(--award-gap);
+
+    span { font-size: var(--font-size-10); }
+    input { max-width: unset; }
+  }
+  section.currency {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: 1fr 1fr;
+    gap: var(--award-gap);
+    button[data-action] {
+      padding-inline: 6px;
+      width: unset;
+      line-height: unset;
+      font-size: var(--font-size-10);
+    }
+    input { max-width: unset; }
+  }
+
+  &.award header { margin-bottom: .25rem; }
+
+  .distribution {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .375rem;
+    font-size: var(--font-size-12);
+    margin-bottom: .25rem;
+
+    span:has(+ slide-toggle:not([checked])), slide-toggle[checked] + span { font-weight: bold; }
+
+    slide-toggle {
+      --slide-toggle-track-color-unchecked: var(--daggerheart-color-olive);
+      --slide-toggle-track-color-checked: var(--daggerheart-color-gold);
+    }
+  }
+
+  .destinations {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-block: 4px;
+    text-align: start;
+
+    label {
+      display: flex;
+      gap: 0.5em;
+      margin: 0;
+      padding: 4px;
+      align-items: center;
+      cursor: var(--cursor-pointer);
+    }
+    input {
+      flex: unset;
+      width: 1em;
+      height: 1em;
+      margin: 0;
+      align-self: center;
+    }
+    .no-destinations, .no-primary-party {
+      grid-column: 1 / -1;
+      text-align: center;
+      text-wrap: pretty;
+      color: var(--color-text-dark-5);
+    }
+    .no-destinations {
+      font-weight: bold;
+    }
+  }
+
+  button[type=submit] { width: 100%; }
+}

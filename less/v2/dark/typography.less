@@ -1,0 +1,39 @@
+/* TODO: Add .daggerheart2-journal when dark mode journal sheets are implemented */
+.theme-dark :where(.daggerheart2):not(.chat-card, .daggerheart-tooltip, .content),
+.daggerheart2.daggerheart-theme-dark {
+  --daggerheart-color-table-row-odd: var(--daggerheart-color-iron-gray);
+  --daggerheart-color-table-row-even: color-mix(in oklab, var(--daggerheart-color-table-row-odd), black 10%);
+  --daggerheart-block-background: var(--daggerheart-color-blue-gray-4);
+
+  --daggerheart-statblock-background: rgb(0 0 0 / .35);
+  --daggerheart-statblock-ability-border: black;
+  --daggerheart-statblock-ability-header-1st: rgb(83, 73, 50);
+  --daggerheart-statblock-ability-header-2nd: rgb(62, 68, 48);
+  --daggerheart-statblock-ability-stat-1st: rgb(89, 63, 63);
+  --daggerheart-statblock-ability-stat-2nd: rgb(89, 67, 87);
+  --daggerheart-statblock-border: var(--daggerheart-color-blue-gray-1);
+  --daggerheart-statblock-text-header: var(--color-text-dark-primary);
+  --daggerheart-statblock-text-primary: var(--color-text-dark-primary);
+  --daggerheart-statblock-text-secondary: color-mix(in oklab, var(--color-text-dark-primary), transparent 25%);
+
+  table {
+    --table-background-color: var(--daggerheart-color-blue-gray-1);
+    --daggerheart-color-table-border: color-mix(in oklab, var(--daggerheart-color-table-row-even), black 10%);
+
+    /* Set header gradient colors via inheritance for easier override (0,2,1) */
+    --daggerheart-color-hd-1: #491d25;
+    --daggerheart-color-hd-2: #311b1f;
+  }
+
+  .roll-link > i.fa-dice-d20, a.inline-roll > i.fa-dice-d20 { filter: invert(1); }
+
+  .notable {
+    --daggerheart-block-background: var(--daggerheart-color-blue-gray-4);
+    --daggerheart-block-border-color: #212121;
+    &::before, &::after { filter: grayscale(100%); }
+  }
+
+  .statblock.npc {
+    h4.statblock-title, h5.statblock-actions-title { border-color: var(--daggerheart-color-blue-gray-3); }
+  }
+}

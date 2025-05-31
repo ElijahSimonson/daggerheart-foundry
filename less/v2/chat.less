@@ -1,0 +1,816 @@
+/* ---------------------------------- */
+/*  Chat Cards                        */
+/* ---------------------------------- */
+
+:is(.chat-popout, #chat-log, .chat-log) .message {
+  padding: .5rem;
+  border-width: 1px;
+  border-block-end-width: 2px;
+  border-radius: 6px;
+  font-family: var(--daggerheart-font-roboto);
+  font-size: var(--font-size-13);
+  position: relative;
+  background: var(--daggerheart-color-parchment);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: transparent url("ui/texture-gray1.webp") no-repeat top left;
+    border-radius: 6px;
+  }
+
+  > .message-header, > .message-content { position: relative; }
+
+  &.emote { background-color: #f3edde; }
+  &.whisper { background-color: #e8e8ef; }
+  &.whisper::before { filter: grayscale(1); }
+  &.blind { background-color: #f5eaf5; }
+  &.blind::before { mix-blend-mode: luminosity; }
+
+  /* Header */
+  .message-header {
+    margin-bottom: .375rem;
+
+    .message-delete { display: none; }
+
+    .message-sender {
+      display: flex;
+      align-items: start;
+      gap: .75rem;
+      white-space: unset;
+
+      .avatar {
+        height: 100%;
+        display: grid;
+        place-content: center;
+      }
+
+      img {
+        width: 38px;
+        height: 38px;
+        border-radius: 100%;
+        box-shadow: 0 0 6px rgb(0 0 0 / 85%);
+        object-fit: cover;
+        object-position: top;
+        border: none;
+        flex: none;
+        background: var(--daggerheart-color-light-gray);
+      }
+    }
+
+    .name-stacked {
+      flex: 1;
+      display: flex;
+      min-height: 32px;
+      flex-direction: column;
+      justify-content: center;
+      line-height: normal;
+    }
+
+    .title {
+      font-family: var(--daggerheart-font-roboto-slab);
+      font-size: var(--font-size-16);
+      font-weight: bold;
+      color: var(--color-text-dark-primary);
+    }
+
+    .subtitle {
+      font-size: var(--font-size-11);
+      color: var(--color-text-dark-5);
+    }
+
+    .message-metadata {
+      font-size: var(--font-size-10);
+      transform: translate(2px, -4px);
+      flex: none;
+    }
+
+    time { color: var(--color-text-dark-5); }
+
+    .flavor-text {
+      margin-block-start: 4px;
+      margin-block-end: -4px;
+      font-style: italic;
+    }
+  }
+}
+
+/* Modifier Keys */
+:is(.chat-popout, #chat-log, .chat-log)[data-modifier-shift] {
+  .message .message-header .message-delete { display: unset; }
+  .message .message-header:has(.message-delete) .chat-control { display: none; }
+}
+
+/* ---------------------------------- */
+/*  Dice Rolls                        */
+/* ---------------------------------- */
+
+.dice-result {
+  display: flex;
+  flex-direction: column;
+
+  .dice-formula, .dice-total {
+    border-radius: 3px;
+    background: var(--daggerheart-background-5);
+    padding: .25rem;
+    line-height: normal;
+    flex: auto;
+    margin: 0;
+  }
+
+  .dice-total {
+    font-weight: bold;
+    font-size: var(--font-size-28);
+    padding: .125rem;
+    margin-top: .25rem;
+    font-family: var(--font-primary);
+    position: relative;
+
+    &::before, &::after {
+      position: absolute;
+      inset: 6px 0 6px auto;
+    }
+
+    &::before {
+      content: "";
+      width: 36px;
+      border-left: 1px solid #bbb;
+    }
+
+    &::after {
+      content: "\f054";
+      font-family: var(--font-awesome);
+      display: grid;
+      place-content: center;
+      padding: 0 .8125rem;
+      color: var(--color-text-dark-5);
+      font-size: var(--font-size-16);
+      transition: all 250ms ease;
+    }
+
+    &.success:not(.fumble), &.critical {
+      background: var(--daggerheart-color-success-background);
+      border-color: var(--daggerheart-color-success);
+      color: var(--daggerheart-color-success-critical);
+      &::after { color: var(--daggerheart-color-success); }
+    }
+
+    &.failure:not(.critical), &.fumble {
+      background: var(--daggerheart-color-failure-background);
+      border-color: var(--daggerheart-color-failure);
+      color: var(--daggerheart-color-failure-critical);
+      &::after { color: var(--daggerheart-color-failure); }
+    }
+
+    &.critical, &.fumble {
+      border-width: 3px;
+      border-style: double;
+    }
+
+    > .icons {
+      position: absolute;
+      inset: 0 auto 0 8px;
+      display: flex;
+      align-items: center;
+      opacity: .35;
+    }
+  }
+
+  .dice-tooltip-collapser {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 250ms ease;
+  }
+
+  .dice-tooltip {
+    flex: auto;
+    order: unset;
+    display: block;
+    overflow: hidden;
+
+    .tooltip-part {
+      border-bottom: 1px solid var(--color-border-light-1);
+      padding: .125rem 0;
+
+      &:last-child {
+        border: none;
+        padding-bottom: 0;
+      }
+
+      &.constant {
+        padding-right: 6px;
+        min-height: 40px;
+        display: grid;
+      }
+    }
+
+    .dice {
+      display: flex;
+      align-items: center;
+
+      .dice-rolls {
+        flex: 1;
+        margin: 5px 0 5px 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1px;
+
+        .roll {
+          float: unset;
+          margin: 0;
+        }
+
+        .constant {
+          font-family: var(--font-primary);
+          font-weight: bold;
+          font-size: var(--font-size-18);
+          margin-left: .25rem;
+
+          .sign {
+            font-weight: normal;
+            color: var(--color-text-light-6);
+            margin-right: 2px;
+          }
+        }
+      }
+
+      .total {
+        flex-basis: 25%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+
+        > img {
+          top: 6px;
+          position: absolute;
+          width: 32px;
+          border: none;
+          opacity: .1;
+        }
+
+        .label {
+          font-family: var(--daggerheart-font-roboto-condensed);
+          font-size: var(--font-size-10);
+          color: var(--color-text-dark-5);
+          text-transform: uppercase;
+          text-align: center;
+        }
+
+        .value {
+          font-family: var(--font-primary);
+          font-weight: bold;
+          font-size: var(--font-size-20);
+        }
+
+        .sign {
+          color: var(--color-text-light-6);
+          font-weight: normal;
+          margin-right: 2px;
+        }
+      }
+    }
+  }
+}
+
+.dice-roll {
+  cursor: var(--cursor-pointer);
+
+  .dice-flavor { display: none; }
+
+  &.expanded {
+    .dice-total::after { transform: rotate(-90deg); }
+    .dice-tooltip-collapser { grid-template-rows: 1fr; }
+  }
+
+  &.secret-roll {
+    cursor: initial;
+    .dice-total::before, .dice-total::after {
+      content: none;
+    }
+    .dice-total > i { display: none; }
+  }
+}
+
+/* ---------------------------------- */
+/*  Chat Popouts                      */
+/* ---------------------------------- */
+
+.chat-popout {
+  margin: 0;
+  background: none;
+  box-shadow: none;
+
+  .window-header {
+    border: none;
+    inset: 0 0 auto 0;
+    z-index: 1;
+    padding: 7px 6px 0 0;
+    background: none;
+
+    :is(a, button).header-button, .header-control {
+      height: 15px;
+      border-radius: 100%;
+      background: rgb(0 0 0 / 25%);
+      font-size: var(--font-size-10);
+      min-height: unset;
+    }
+
+    :is(a, button):is(.header-button, .header-control) {
+      width: 15px;
+      display: inline-grid;
+      place-content: center;
+      color: var(--color-text-light-highlight);
+      margin: 0;
+      padding: 0;
+
+      > i { margin: 0; }
+    }
+
+    .header-control {
+      flex: 0 0 15px;
+      &:hover { text-shadow: 0 0 8px red; }
+    }
+  }
+
+  .window-content {
+    padding: 0;
+    background: none;
+    overflow: visible;
+
+    .message {
+      margin: 0;
+      box-shadow: 0 0 20px var(--color-shadow-dark);
+    }
+  }
+
+  &.minimized {
+    background: url("../../ui/denim075.png");
+    max-height: var(--header-height);
+    .window-header { padding-block: 0; }
+  }
+
+  &:not(.minimized) .window-header { position: absolute; }
+
+  .message-metadata { padding-right: 18px; }
+}
+
+/* ---------------------------------- */
+/*  Item Cards                        */
+/* ---------------------------------- */
+
+.daggerheart2.chat-card {
+  display: flex;
+  flex-direction: column;
+  gap: .375rem;
+
+  + .dice-roll { margin-top: .375rem; }
+
+  .description {
+    padding: .5rem;
+    border: 1px solid var(--daggerheart-color-gold);
+    border-radius: 3px;
+    background: var(--daggerheart-color-card);
+    overflow: hidden;
+
+    .summary {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+
+      > img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .name-stacked {
+        flex: 1;
+        padding-right: .5rem;
+      }
+
+      > i {
+        font-size: var(--font-size-14);
+        color: var(--color-text-dark-5);
+        margin-right: 8px;
+        transition: all 250ms ease;
+      }
+    }
+
+    .details {
+      font-family: var(--daggerheart-font-roboto);
+      font-size: var(--font-size-11);
+      padding: 0;
+      display: grid;
+      grid-template-rows: 1fr;
+      transition: all 250ms ease;
+
+      > .wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+        overflow: hidden;
+
+        /* Immediate children vert margins
+         * are handled by the column gap */
+        > * { margin-block: 0; }
+      }
+
+      p {
+        margin: 0;
+        &:first-child { padding-top: .5rem; }
+      }
+    }
+
+    &.critical {
+      border-width: 3px;
+      border-style: double;
+
+      .summary .subtitle {
+        color: var(--daggerheart-color-success);
+        text-transform: uppercase;
+      }
+    }
+
+    &.collapsible .summary { cursor: var(--cursor-pointer); }
+    &.collapsed {
+      .summary > i { transform: rotate(-90deg); }
+      .details {
+        grid-template-rows: 0fr;
+        opacity: 0;
+      }
+    }
+  }
+
+  .card-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: .375rem;
+    [hidden] { display: none; }
+  }
+
+  .pills .pill {
+    font-size: var(--font-size-10);
+    line-height: 1;
+  }
+}
+
+.dice-roll + .chat-card {
+  margin-block-start: .375rem;
+}
+
+.chat-sidebar:not([data-gm-user]) .card-header[data-concealed] {
+  .summary { cursor: inherit; }
+  .fa-chevron-down, .details { display: none; }
+}
+
+.message {
+  p.supplement {
+    margin: 0;
+    font-size: var(--font-size-11);
+    color: var(--color-text-dark-5);
+    padding: 0 .25rem;
+
+    > strong {
+      color: var(--color-text-dark-primary);
+      text-transform: uppercase;
+      font-size: var(--font-size-10);
+      margin-right: .25rem;
+    }
+  }
+
+  .dice-roll + p.supplement { margin: .5rem 0; }
+}
+
+/* Damage & Effects Trays */
+.daggerheart2 :is(.card-tray, .effects-tray),
+.daggerheart2.card-tray {
+  margin-top: .125rem;
+  &.damage-tray, &.effects-tray { margin-block-start: 8px; }
+  &.targets-tray {
+    margin-top: 6px;
+    &:not(.collapsed) > label { padding-bottom: 4px; }
+  }
+
+  > label {
+    cursor: var(--cursor-pointer);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .25rem;
+    font-size: var(--font-size-11);
+
+    > span { flex: none; }
+    > i:first-of-type { color: var(--color-text-light-6); }
+    .fa-caret-down { transition: all 250ms ease; }
+
+    &::before, &::after {
+      content: "";
+      flex-basis: 50%;
+      border-top: 1px dotted var(--daggerheart-color-gold);
+      align-self: center;
+    }
+  }
+
+  .target-source-control {
+    &:not([hidden]) { display: flex; }
+    justify-content: space-evenly;
+    gap: 4px;
+    margin-block-start: 1px;
+
+    button {
+      width: unset;
+      font-size: var(--font-size-10);
+      &:hover, &:focus, &[aria-pressed="true"] {
+        box-shadow: none;
+        text-shadow: 0 0 5px var(--color-shadow-highlight);
+      }
+    }
+  }
+
+  .effects, .targets {
+    display: flex;
+    flex-direction: column;
+
+    .effect, .target {
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+      padding-bottom: .25rem;
+      margin-bottom: .25rem;
+      border-bottom: 1px solid var(--color-border-light-1);
+
+      &:last-child {
+        padding: 0;
+        margin: 0;
+        border: none;
+      }
+
+      > img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .name-stacked { flex: 1; }
+    }
+    > .none {
+      text-align: center;
+      margin-block: 4px;
+    }
+  }
+
+  .effects .effect {
+    > button {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0 0 4px;
+      font-size: var(--font-size-12);
+    }
+  }
+
+  .targets .target {
+    flex-wrap: wrap;
+
+    .subtitle {
+      display: flex;
+      gap: 4px;
+    }
+
+    .change-source {
+      width: 13px;
+      height: 13px;
+      --icon-size: 13px;
+      padding: 0;
+      border-radius: 4px;
+      display: grid;
+      grid-template-areas: "overlay";
+      font-size: inherit;
+      > * { grid-area: overlay; }
+      > daggerheart-icon { display: block; }
+      > i { color: red; }
+      &:not([aria-pressed="true"]) .fa-slash { display: none; }
+      &:not([aria-pressed="mixed"]) .fa-arrow-turn-down { display: none; }
+      .fa-arrow-turn-down {
+        position: relative;
+        left: 8px;
+        top: -1px;
+      }
+    }
+
+    .calculated {
+      padding-inline-end: 4px;
+      font-size: var(--font-size-14);
+      font-weight: bold;
+      color: var(--daggerheart-color-application-damage);
+
+      &.healing { color: var(--daggerheart-color-application-healing); }
+      &.temp { color: var(--daggerheart-color-application-temp); }
+    }
+
+    .damage-multipliers {
+      flex: 1 0 calc(100% - 6px);
+      display: grid;
+      grid-template-columns: auto repeat(6, 1fr);
+      gap: 2px;
+      margin-inline: 3px;
+      font-size: var(--font-size-11);
+
+      &::before {
+        content: "\f00d";
+        align-self: center;
+        padding-inline-end: 2px;
+        color: var(--daggerheart-color-tan);
+        font-family: var(--font-awesome);
+        font-weight: 900;
+      }
+
+      button {
+        width: 100%;
+        height: unset;
+        border-radius: 3px;
+        padding: 2px;
+        font-size: inherit;
+        line-height: unset;
+        cursor: var(--cursor-pointer);
+
+        &::after {
+          content: "";
+          display: block;
+          width: 8px;
+          height: 8px;
+          border-radius: 8px;
+          background-color: var(--daggerheart-color-faint);
+        }
+
+        &[aria-pressed="true"] {
+          border-color: var(--daggerheart-color-crimson);
+          &::after { background-color: var(--daggerheart-color-crimson); }
+        }
+      }
+    }
+  }
+
+  .wrapper > button {
+    margin: 3px;
+    width: calc(100% - 6px);
+    margin-block-start: 6px;
+  }
+}
+
+.hidden-dc { display: contents; }
+.visible-dc { display: none; }
+[data-display-challenge] {
+  .hidden-dc { display: none; }
+  .visible-dc { display: contents; }
+}
+
+/* ---------------------------------- */
+/*  Enchantment                       */
+/* ---------------------------------- */
+
+enchantment-application {
+  margin: 4px;
+
+  .drop-area {
+    display: grid;
+    gap: 4px;
+    min-block-size: 40px;
+    border: 1px dashed var(--daggerheart-color-crimson);
+    border-radius: 4px;
+    padding: 4px;
+    background: var(--daggerheart-color-card);
+
+    p {
+      place-content: center;
+      text-align: center;
+    }
+
+    .preview {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      &:not(:last-child) {
+        border-block-end: 1px dotted var(--color-border-light-2);
+        padding-block-end: 4px;
+      }
+
+      > img {
+        block-size: 32px;
+        inline-size: 32px;
+        flex: 0 0 32px;
+      }
+      > .name {
+        flex: 1;
+        font-family: var(--daggerheart-font-roboto-slab);
+        font-weight: bold;
+      }
+      > a {
+        flex: 0 0 20px;
+      }
+    }
+  }
+
+  .count-area {
+    margin-block-start: 2px;
+    margin-inline-end: 4px;
+    font-size: var(--font-size-10);
+    text-align: end;
+    text-transform: uppercase;
+  }
+}
+
+/* ---------------------------------- */
+/*  Target Evaluations                */
+/* ---------------------------------- */
+
+:is(.chat-popout, #chat-log, .chat-log) .message .daggerheart2.evaluation {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+
+  .target {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: 0 8px;
+    cursor: var(--cursor-pointer);
+
+    > i { font-size: var(--font-size-14); }
+
+    .name {
+      font-family: var(--daggerheart-font-roboto-slab);
+      font-size: var(--font-size-14);
+      font-weight: bold;
+    }
+
+    .name-stacked {
+      flex: 1;
+      line-height: normal;
+      min-height: 24px;
+
+      .title {
+        font-size: var(--font-size-16);
+        display: flex;
+        align-items: center;
+        gap: .325rem;
+
+        > i { font-size: var(--font-size-14); }
+      }
+    }
+
+    .ac {
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+      font-size: var(--font-size-14);
+      margin-left: auto;
+      opacity: .75;
+
+      > span {
+        font-weight: bold;
+        font-family: var(--font-primary);
+        word-break: keep-all;
+      }
+    }
+
+    &.hit > i { color: var(--daggerheart-color-success); }
+
+    &.miss > i {
+      color: var(--daggerheart-color-failure);
+      height: 12px;
+    }
+  }
+}
+
+/* ---------------------------------- */
+/*  Rest & Turn Cards                 */
+/* ---------------------------------- */
+
+.daggerheart2.chat-card {
+  section > strong:first-child {
+    display: block;
+    margin-block-start: 1em;
+  }
+  .activities ul {
+    margin-block-start: 8px;
+
+    li {
+      --gold-icon-size: 32px;
+      gap: 8px;
+    }
+
+    a.rollable:hover .subtitle { text-shadow: none; }
+  }
+  .deltas ul {
+    .delta {
+      display: flex;
+      justify-content: space-between;
+      .label { flex-grow: 1; }
+      .roll { font-size: var(--font-size-12); }
+    }
+  }
+}

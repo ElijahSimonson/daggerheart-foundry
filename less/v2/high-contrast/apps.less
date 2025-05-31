@@ -1,0 +1,88 @@
+.daggerheart-flag-high-contrast .daggerheart2,
+.daggerheart2.daggerheart-flag-high-contrast {
+  &.sheet {
+    --color-text-dark-primary: #000000;
+    --daggerheart-color-gold: #e3ce9e;
+    --daggerheart-color-scrollbar: var(--daggerheart-color-maroon);
+  }
+
+  .card { border-color: var(--daggerheart-color-dark); }
+
+  .pill-lg {
+    border-color: var(--daggerheart-color-dark);
+    &.empty { opacity: .5; }
+  }
+
+  .meter .label :is(.value, .max) {
+    text-shadow: 0 0 2px var(--daggerheart-color-dark);
+    filter: drop-shadow(0 0 2px var(--daggerheart-color-dark));
+  }
+}
+
+/* ---------------------------------- */
+/*  Custom Elements                   */
+/* ---------------------------------- */
+
+.daggerheart-flag-high-contrast item-list-controls search {
+  border: var(--daggerheart-border-dark);
+  .filter-list{
+    & > li:hover button { font-weight: bold; }
+  }
+}
+
+.daggerheart-flag-high-contrast .effects-element {
+  .conditions-list .condition {
+    --border-style: var(--daggerheart-border-dark);
+    span { color: var(--color-text-dark-5); }
+    &.active span { color: var(--color-text-dark-1); }
+  }
+}
+
+/* ---------------------------------- */
+/*  Light Mode                        */
+/* ---------------------------------- */
+
+.daggerheart-flag-high-contrast:is(.daggerheart-theme-light, .theme-light) .daggerheart2,
+.daggerheart2.daggerheart-flag-high-contrast.daggerheart-theme-light {
+  &.sheet {
+    --filigree-background-color: #ffffff;
+    --filigree-border-color: var(--daggerheart-color-dark);
+    --daggerheart-background-card: #ffffff;
+    --daggerheart-background-parchment: #ffffff;
+    --daggerheart-border-dark: 1px solid #000;
+    --proficiency-cycle-enabled-color: color-mix(in oklab, var(--daggerheart-color-blue), black 20%);
+    --proficiency-cycle-disabled-color: var(--daggerheart-color-dark);
+  }
+}
+
+.daggerheart-flag-high-contrast.daggerheart-theme-light item-list-controls search {
+  .filter-list .filter-item.active::after { color: var(--color-text-dark-3); }
+  .dropdown:focus-within .filter { color: var(--daggerheart-color-dark); }
+}
+
+/* ---------------------------------- */
+/*  Dark Mode                         */
+/* ---------------------------------- */
+
+.daggerheart-flag-high-contrast:is(.daggerheart-theme-dark, .theme-dark) .daggerheart2,
+.daggerheart2.daggerheart-flag-high-contrast.daggerheart-theme-dark {
+  &.sheet {
+    --color-text-dark-primary: #fff;
+    --color-text-dark-secondary: var(--color-text-light-3);
+    --daggerheart-background-card: #000000;
+    --daggerheart-background-parchment: #000000;
+    --daggerheart-border-dark: 1px solid #999;
+    --daggerheart-color-blue-white: #fff;
+    --daggerheart-color-card: #fff;
+    --filigree-background-color: #000000;
+    --filigree-border-color: #999;
+    --proficiency-cycle-enabled-color: unset;
+    --proficiency-cycle-disabled-color: unset;
+  }
+
+  .card { border: var(--daggerheart-border-dark); }
+}
+
+.daggerheart-flag-high-contrast:is(.daggerheart-theme-dark, .theme-dark) item-list-controls search {
+  .filter-control:not(.active) { color: var(--color-text-light-6); }
+}

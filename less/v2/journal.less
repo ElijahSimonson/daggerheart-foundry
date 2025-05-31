@@ -1,0 +1,290 @@
+/* ---------------------------------- */
+/*  Journal v2 Styles                 */
+/* ---------------------------------- */
+
+/* Journal-only */
+.sheet.daggerheart2-journal {
+  .window-resizable-handle {
+    bottom: 2px;
+    right: 2px;
+    padding: 0;
+  }
+
+  &.journal-entry .scrollable, &.journal-entry-page.editor-content {
+    scrollbar-width: thin;
+    scrollbar-color: var(--daggerheart-color-gold) transparent;
+
+    &::-webkit-scrollbar-track {
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border: none;
+      background: var(--daggerheart-color-gold);
+    }
+  }
+
+  /* Background Texture & Headings */
+  .journal-entry-content,
+  &.journal-entry-page .window-content {
+    background: url("ui/texture1.webp") no-repeat top center / auto 770px,
+      var(--daggerheart-color-parchment) url("ui/texture2.webp") no-repeat bottom center / auto 704px;
+
+    h1 { font-size: var(--daggerheart-journal-h1-size); }
+    h2 { font-size: var(--daggerheart-journal-h2-size); }
+    h3 { font-size: var(--daggerheart-journal-h3-size); }
+    h4, h5 { font-size: var(--daggerheart-journal-h4-size); }
+
+    /* Page Title */
+    .journal-header .title {
+      border: 1px transparent;
+      transition: border 250ms ease;
+      font-size: var(--daggerheart-journal-title-size);
+      font-family: var(--daggerheart-font-modesto);
+      font-weight: bold;
+      letter-spacing: 1px;
+
+      &:hover, &:focus {
+        border: 1px solid var(--daggerheart-color-gold);
+        box-shadow: 0 0 6px var(--daggerheart-color-gold);
+      }
+
+      &:disabled {
+        background: none;
+        color: var(--color-text-dark-primary);
+      }
+    }
+  }
+
+  /* Edit Button */
+  &.journal-entry .edit-container .editor-edit {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
+    > i::before { content: "\f52d"; }
+  }
+
+  /* ProseMirror */
+  &.journal-entry-page prose-mirror {
+    margin: 0;
+    menu { border-radius: 0; }
+
+    .editor-content {
+      scrollbar-gutter: stable;
+      margin: 0 4px 0 16px;
+      padding-right: 4px;
+    }
+  }
+
+  /* Navigation */
+  &.journal-entry .book-navigation {
+    flex-grow: 0;
+    padding: 5px 0px;
+    margin: 0 10px 10px;
+    border: none;
+    opacity: 0.2;
+    transition: opacity 0.5s ease-out;
+
+    &:hover { opacity: 1; }
+
+    ul {
+      display: flex;
+      gap: 5px;
+      margin: 0;
+      padding-inline: 1rem;
+      list-style: none;
+    }
+    li { flex: 1 1 33%; }
+    a {
+      display: block;
+      border: none;
+      background: none;
+      text-align: center;
+      text-decoration: none;
+    }
+    a[rel="prev"] {
+      text-align: start;
+      &::before {
+        content: "\f060";
+        font-family: var(--font-awesome);
+        font-weight: bold;
+        padding-inline-end: 2px;
+      }
+    }
+    a[rel="next"] {
+      text-align: end;
+      &::after {
+        content: "\f061";
+        font-family: var(--font-awesome);
+        font-weight: bold;
+        padding-inline-start: 2px;
+      }
+    }
+    a.parent {
+      text-align: center;
+      &::before {
+        content: "\f062";
+        font-family: var(--font-awesome);
+        font-weight: bold;
+        padding-inline-end: 3px;
+      }
+    }
+  }
+
+}
+
+/* ----------------------------------------- */
+/*  Journal Pages                            */
+/* ----------------------------------------- */
+
+.daggerheart2.journal-editor {
+  .window-content { padding: 0; }
+  [data-application-part], .editor { height: 100%; }
+  .prosemirror {
+    menu { border-radius: 0; }
+    .editor-container { overflow-y: auto; }
+    .editor-content {
+      padding: .25em;
+      padding-inline-end: .5em;
+    }
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: revert-layer;
+    text-shadow: revert-layer;
+  }
+}
+
+.daggerheart2-journal.app .editable {
+  .journal-header {
+    flex: 0;
+    flex-wrap: nowrap;
+    .title {
+      height: 50px;
+      background: rgb(0 0 0 / .1);
+      border-radius: 4px;
+      font-size: var(--font-size-32);
+      line-height: 50px;
+    }
+    .page-level {
+      flex: 0 0 110px;
+      align-items: flex-end;
+    }
+    .heading-level {
+      width: 100%;
+      align-items: center;
+    }
+  }
+}
+
+/* ----------------------------------------- */
+/*  Tracking Sheets                          */
+/* ----------------------------------------- */
+
+/* Tracker CSS */
+.app.sheet .srd-tracker {
+
+  --entry-border-color: rgb(211, 203, 209);
+
+  margin-bottom: 1em;
+
+  h1 {
+    text-align:center;
+  }
+
+  h2 {
+    text-align: center;
+    margin: 0;
+  }
+
+  h3:not(.label) {
+    width: fit-content;
+    padding: 0 15%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  h4, h5 {
+    font-family: var(--font-h5);
+    text-align: center;
+
+    &.highlight { font-size: larger; }
+  }
+
+  td { padding: 0 0 0 1em; }
+
+  .settlement-size {
+    display: grid;
+    grid: auto / auto-flow 1fr;
+  }
+
+  .travel-info {
+
+    display: grid;
+    grid:
+      ". ." 1fr
+      ". ." 1fr
+      ". ." 1fr
+    / 1.5fr 1fr;
+    grid-auto-flow: column;
+    gap:0 2em;
+    padding: 0 5px 5px;
+    margin-bottom: 1em;
+
+    :is(h3, h4) { margin: 0 10px 0 0; }
+
+    .inline { margin: 0; }
+  }
+
+  .inline {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    margin: 10px 0;
+  }
+
+  .highlight {
+    text-align: center;
+    padding: 5px;
+  }
+
+  .label, .label:is(h4, h5) {
+    margin: 0 10px 0 0;
+    text-align: left;
+  }
+
+  .field {
+    border-bottom: 2px solid var(--color-text-dark-primary);
+    flex-grow: 1;
+    padding: 5px;
+
+    p { margin-bottom: 0; }
+  }
+
+  .field.bubble {
+    background-color: #fff;
+    box-shadow: 0px 0px 2px 1px;
+    border-radius: 100%;
+    min-width: 20px;
+    max-width: 20px;
+    min-height: 20px;
+    max-height: 20px;
+    text-align: center;
+    margin: 3px;
+
+    p { margin-top: -3px; }
+  }
+  .travel-info, .field.block {
+    min-height: 4em;
+    background: linear-gradient(to top, var(--daggerheart-block-background) 65%, transparent);
+    border: 1px solid var(--entry-border-color);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+  }
+
+  .col {
+    flex-grow: 1;
+    margin: 5px;
+  }
+}

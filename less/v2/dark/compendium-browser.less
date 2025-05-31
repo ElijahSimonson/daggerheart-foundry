@@ -1,0 +1,22 @@
+.theme-dark .daggerheart2.compendium-browser {
+  --color-text-primary: var(--daggerheart-color-blue-white);
+
+  .window-content {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+
+    .mode-toggle slide-toggle { --slide-toggle-track-color-unchecked: var(--daggerheart-color-iron-gray); }
+
+    .filter-header label > span { color: var(--color-text-dark-5); }
+
+    .filter-range {
+      label { color: var(--color-text-dark-5); }
+      input {
+        border: var(--daggerheart-border-gold);
+        background: var(--daggerheart-background-parchment);
+
+        &::placeholder { color: var(--color-text-light-6); }
+      }
+    }
+  }
+}

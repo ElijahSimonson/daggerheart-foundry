@@ -1,0 +1,47 @@
+.theme-dark .daggerheart2:not(.chat-card, .create-document),
+.daggerheart2.daggerheart-theme-dark {
+  --color-fieldset-border: var(--daggerheart-color-blue-gray-3);
+
+  fieldset {
+    --color-fieldset-border: var(--daggerheart-color-blue-gray-3);
+    > legend { color: var(--daggerheart-color-gold); }
+  }
+
+  .form-group {
+    &.card {
+      background: var(--daggerheart-background-10);
+      border-color: var(--color-fieldset-border);
+    }
+
+    &.label-top > label > p.hint::before { color: var(--daggerheart-color-gold); }
+  }
+
+  select, input:not([type="range"]) {
+    --input-background-color: var(--daggerheart-background-parchment);
+    border: var(--daggerheart-border-gold);
+  }
+
+  input::placeholder, textarea::placeholder { --input-placeholder-color: var(--daggerheart-color-blue-gray-3); }
+
+  fieldset.card {
+    select, input:not([type="range"]) { --input-background-color: var(--daggerheart-background-25); }
+  }
+
+  :is(input, select):not([type="range"]):disabled {
+    background: var(--daggerheart-color-dark-gray);
+  }
+
+  daggerheart-checkbox {
+    &[disabled]:not([checked]) {
+      --checkbox-border-color: var(--daggerheart-color-blue-gray-3);
+      --checkbox-empty-color: var(--daggerheart-color-blue-gray-3);
+    }
+  }
+
+  button:not(.pip) {
+    border-color: var(--daggerheart-color-blue-gray-1);
+    &:hover { border-color: var(--daggerheart-color-blue-gray-1); }
+  }
+
+  .control-button { color: var(--daggerheart-color-gold); }
+}

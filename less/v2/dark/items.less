@@ -1,0 +1,43 @@
+.theme-dark .daggerheart2.sheet.item,
+.daggerheart2.sheet.item.daggerheart-theme-dark {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto  0;
+    height: 150px;
+    border-radius: 5px 5px 0 0;
+    opacity: .2;
+    //background: url("ui/official/banner-item-dark.webp") no-repeat top center / cover;
+    mask-image: linear-gradient(to bottom, black, transparent);
+  }
+
+  .window-content { position: relative; }
+
+  .window-header slide-toggle { --slide-toggle-track-color-unchecked: var(--daggerheart-color-iron-gray); }
+  .window-header .state-toggle.active { color: var(--daggerheart-color-gold); }
+
+  .item-descriptions .description .header button { color: var(--color-text-dark-5); }
+
+  .tab.advancement {
+    .svg .item-image {
+      /* Converts black to gold */
+      filter: invert(64%) sepia(14%) saturate(563%) hue-rotate(3deg) brightness(89%) contrast(90%);
+    }
+
+    .item-name .summary .content-link {
+      color: var(--color-text-dark-5);
+      > i { color: var(--color-text-dark-5); }
+    }
+  }
+
+  .activities .activity {
+    > .icon.svg { --icon-fill: var(--daggerheart-color-gold); }
+  }
+}
+
+.theme-dark .daggerheart2.starting-equipment,
+.daggerheart2.starting-equipment.theme-dark {
+  --background-depth-1: transparent;
+  --background-depth-2: var(--daggerheart-background-10);
+  --background-depth-3: var(--daggerheart-background-25);
+}
