@@ -1,0 +1,25 @@
+<section class="trait-scores optional-ability-{{abilityRows.optional}}">
+
+    <div class="top">
+        {{#each traitRows.top}}
+            {{> ".trait-score"}}
+        {{/each}}
+    </div>
+</section>
+
+{{#*inline ".trait-score"}}
+    <div class="trait-score" data-trait="{{key}}">
+        <a class="label {{ @root.rollableClass }} trait-check" data-action="roll" data-type="trait >{{ abbr}}"></a>
+        <div class="score">
+            {{#if @root.editable}}
+            <button type="button" class="config-button unbotton" data-action="showConfiguration" data-config="trait"
+                data-tooltip="{{ localize 'DAGGERHEART.TraitConfigure' trait=label}}"
+                aria-label="{{ localize 'DAGGERHEART.TraitConfigure' trait=label}}">
+                <i class="fas fa-cog" inert></i>
+            </button>
+            {{else}}
+            {{value}}
+            {{/if}}
+        </div>
+    </div>
+{{/inline}}

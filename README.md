@@ -20,7 +20,7 @@ The software component of this system is distributed under the MIT license.
 
 ## Installation Instructions
 
-To install and use the Dungeons & Dragons Fifth Edition system for Foundry Virtual Tabletop, simply paste the following
+To install and use the Daggerheart system for Foundry Virtual Tabletop, simply paste the following
 URL into the **Install System** dialog on the Setup menu of the application.
 
 https://raw.githubusercontent.com/ElijahSimonson/daggerheart-foundry/master/system.json
