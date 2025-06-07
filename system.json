@@ -2,38 +2,324 @@
   "id": "daggerheart",
   "title": "Daggerheart",
   "description": "The Daggerheart system for FoundryVTT!",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12.343"
+  },
+  "url": "https://github.com/ElijahSimonson/daggerheart-foundry",
+  "manifest": "https://raw.githubusercontent.com/ElijahSimonson/daggerheart-foundry/master/system.json",
+  "download": "https://github.com/ElijahSimonson/daggerheart-foundry/releases/download/release-0.1.0/daggerheart-release-0.1.0.zip\"",
   "authors": [
     {
       "name": "Elijah",
       "discord": "dragon_ofchaos"
     }
   ],
-  "version": "0.1.0",
-  "compatibility": {
-    "minimum": 12,
-    "verified": "12.343"
-  },
   "esmodules": ["daggerheart.mjs"],
   "styles": ["daggerheart.css"],
+  "documentTypes": {
+    "ActiveEffect": {
+      "enchantment": {}
+    },
+    "Actor": {
+      "character": {
+        "htmlFields": ["details.biography.value", "details.biography.public"]
+      },
+      "npc": {
+        "htmlFields": ["details.biography.value", "details.biography.public"]
+      },
+      "vehicle": {
+        "htmlFields": ["details.biography.value", "details.biography.public"]
+      },
+      "group": {
+        "htmlFields": ["description.full", "description.summary"]
+      }
+    },
+    "ChatMessage": {
+      "rest": {},
+      "turn": {}
+    },
+    "Item": {
+      "weapon": {
+        "htmlFields": ["description.value", "description.chat", "unidentified.description"]
+      },
+      "equipment": {
+        "htmlFields": ["description.value", "description.chat", "unidentified.description"]
+      },
+      "consumable": {
+        "htmlFields": ["description.value", "description.chat", "unidentified.description"]
+      },
+      "tool": {
+        "htmlFields": ["description.value", "description.chat", "unidentified.description"]
+      },
+      "loot": {
+        "htmlFields": ["description.value", "description.chat", "unidentified.description"]
+      },
+      "ancestry": {
+        "htmlFields": ["description.value", "description.chat"]
+      },
+      "community": {
+        "htmlFields": ["description.value", "description.chat"]
+      },
+      "class": {
+        "htmlFields": ["description.value", "description.chat"]
+      },
+      "subclass": {
+        "htmlFields": ["description.value", "description.chat"]
+      },
+      "container": {
+        "htmlFields": ["description.value", "description.chat"]
+      },
+      "backpack": {
+        "htmlFields": ["description.value", "description.chat"]
+      }
+    },
+    "JournalEntryPage": {
+      "class": {
+        "htmlFields": [
+          "details.value",
+          "details.additionalHitPoints",
+          "description.additionalTraits",
+          "description.additionalEquipment",
+          "description.subclass"
+        ]
+      },
+      "map": {},
+      "rule": {
+        "htmlFields": ["tooltip"]
+      },
+      "subclass": {
+        "htmlFields": ["details.value"]
+      }
+    }
+  },
+  "packs": [
+    {
+      "name": "monsters",
+      "label": "Monsters (SRD)",
+      "system": "daggerheart",
+      "path": "packs/monsters",
+      "type": "Actor",
+      "private": false,
+      "flags": {
+        "daggerheart": {
+          "sourceBook": "SRD 1.0",
+          "types": ["npc"]
+        }
+      }
+    },
+    {
+      "name": "items",
+      "label": "Items (SRD)",
+      "system": "daggerheart",
+      "path": "packs/items",
+      "type": "Item",
+      "private": false,
+      "flags": {
+        "daggerheart": {
+          "sourceBook": "SRD 1.0",
+          "types": ["weapon", "equipment", "consumable", "tool", "loot","feat", "container"]
+        }
+      }
+    },
+    {
+       "name": "communities",
+      "label": "Communities",
+      "system": "daggerheart",
+      "path": "packs/communities",
+      "type": "Item",
+      "private": false,
+      "flags": {
+        "daggerheart": {
+          "sorting": "m",
+          "sourceBook": "SRD 1.0",
+          "types": ["communities", "feat"]
+        }
+      }
+    },
+    {
+      "name": "classes",
+      "label": "Classes (SRD)",
+      "system": "daggerheart",
+      "path": "packs/classes",
+      "type": "Item",
+      "private": false,
+      "flags": {
+        "daggerheart": {
+          "sourceBook": "SRD 1.0",
+          "types": ["class"]
+        }
+      }
+    },
+    {
+      "name": "subclasses",
+      "label": "Subclasses (SRD)",
+      "system": "daggerheart",
+      "path": "packs/subclasses",
+      "type": "Item",
+      "private": false,
+      "flags": {
+        "daggerheart": {
+          "sourceBook": "SRD 1.0",
+          "types": ["subclass"]
+        }
+      }
+    },
+    {
+      "name": "classfeatures",
+      "label": "Class & Subclass Features (SRD)",
+      "system": "daggerheart",
+      "path": "packs/classfeatures",
+      "type": "Item",
+      "private": false,
+      "flags": {
+        "daggerheart": {
+          "sourceBook": "SRD 1.0",
+          "types": ["feat", "weapon"]
+        }
+      }
+    },
+    {
+      "name": "ancestries",
+      "label": "Ancestries (SRD)",
+      "system": "daggerheart",
+      "path": "packs/ancestries",
+      "type": "Item",
+      "private": false,
+      "flags": {
+        "daggerheart": {
+          "sourceBook": "SRD 1.0",
+          "types": ["ancestry", "feat"]
+        }
+      }
+    },
+    {
+      "name": "monsterfeatures",
+      "label": "Monster Features (SRD)",
+      "system": "daggerheart",
+      "path": "packs/monsterfeatures",
+      "type": "Item",
+      "private": false,
+      "flags": {
+        "daggerheart": {
+          "sourceBook": "SRD 1.0",
+          "type": ["feat", "weapon"]
+        }
+      }
+    },
+    {
+      "name": "rules",
+      "label": "Rules (SRD)",
+      "system": "daggerheart",
+      "path": "packs/rules",
+      "type": "JournalEntry",
+      "private": false,
+      "flags": {
+        "daggerheart": {
+          "display": "table-of-contents"
+        }
+      }
+    },
+    {
+      "name": "tables",
+      "label": "Tables (SRD)",
+      "system": "daggerheart",
+      "path": "packs/tables",
+      "private": false,
+      "flags": {}
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "Daggerheart SRD Content",
+      "color": "#3863FF",
+      "sorting": "m",
+      "packs": [
+        "monsters",
+        "items",
+        "monsterfeatures",
+        "rules",
+        "tables"
+      ],
+      "folders": [
+        {
+          "name": "Character Features",
+          "sorting": "m",
+          "color": "#b72c1f",
+          "packs": [
+            "classes",
+            "subclasses",
+            "classfeatures",
+            "communities",
+            "ancestries"
+          ]
+        },
+        {
+          "name": "Items",
+          "sorting": "m",
+          "color": "#941919",
+          "packs": [
+            "items",
+            "tradegoods"
+          ]
+        },
+        {
+          "name": "Monsters",
+          "sorting": "m",
+          "color": "#7d160c",
+          "packs": [
+            "monsters",
+            "monsterfeatures"
+          ]
+        }
+      ]
+    }
+  ],
   "languages": [
     {
       "lang": "en",
       "name": "English",
-      "path": "lang/en.json"
+      "path": "lang/en.json",
+      "flags": {}
     }
   ],
-  "packs": [],
-  "packFolders": [],
-  "primaryTokenAttribute": "attributes.hp",
-  "hotReload":{
-    "extensions": [
-      "mjs",
-      "js",
-      "json",
-      "css"
-    ],
-    "paths": [
-      "daggerheart.css", "templates", "lang"
-    ]
+  "media": [
+    {
+      "type": "cover",
+      "loop": false,
+      "flags": {}
+    },
+    {
+      "type": "setup",
+      "url": "systems/daggerheart/ui/compatible/PNGs/DH_CGL_logos_final_full_color.png",
+      "thumbnail": "systems/daggerheart/ui/compatible/PNGs/DH_CGL_logos_final_full_color.png"
+    }
+  ],
+  "socket": true,
+  "grid": {
+    "distance": 5,
+    "units": "ft"
+  },
+  "primaryTicketAttribute": "attributes.hp",
+  "background": "",
+  "flags": {
+    "compendiumArtMapping": {
+      "daggerheart": {
+        "mapping": "",
+        "credit": ""
+      }
+    },
+    "daggerheart": {
+      "sourceBooks": {
+        "SRD 1.0": "SOURCE.BOOK.SRD1"
+      }
+    },
+    "needsMigrationVersion": "0.1.0",
+    "compatibleMigrationVersion": "0.1.0",
+    "hotReload": {
+      "extensions": ["css", "hbs", "json"],
+      "paths": ["daggerheart.css", "templates", "lang"]
+    }
   }
 }

@@ -1,78 +1,95 @@
+import { preLocalize } from "./utils.mjs";
+import * as activities from "./documents/activity/_module.mjs";
+import * as advancement from "./documents/advancement/_module.mjs";
+import MappingField from "./data/fields/mapping-field.mjs";
+import TransformationSetting from "./data/settings/transformation-settings.mjs"
+import { ConsumptionTarget } from "./data/activity/fields/consumption-targets-field.mjs"
+import MapLocationControlIcon from "./canvas/map-location-control-icon.mjs"
 
 
 const DAGGERHEART = {};
 
+//ASCII Artwork
+DAGGERHEART.ASCII = `
+  ____    _    ____  ____ _____ ____  _   _ _____    _    ____ _____
+ |  _ \\  / \\  / ___|/ ___| ____|  _ \\| | | | ____|  / \\  |  _ \\_   _|
+ | | | |/ _ \\| |  _| |  _|  _| | |_) | |_| |  _|   / _ \\ | |_) || |
+ | |_| / ___ \\ |_| | |_| | |___|  _ <|  _  | |___ / ___ \\|  _ < | |
+ |____/_/   \\_\\____|\\____|_____|_| \\_\\_| |_|_____/_/   \\_\\_| \\_\\|_|
+
+`;
+
 /**
  * Configuration data for abilities.
  *
- * @typedef {object} AbilityConfiguration
+ * @typedef {object} TraitConfiguration
  * @property {string} label                               Localized label.
  * @property {string} abbreviation                        Localized abbreviation.
  * @property {string} fullKey                             Fully written key used as alternate for enrichers.
- * @property {string} [reference]                         Reference to a rule page describing this ability.
- * @property {string} [type]                              Whether this is a "physical" or "mental" ability.
- * @property {Object<string, number|string>}  [defaults]  Default values for this ability based on actor type.
+ * @property {string} [reference]                         Reference to a rule page describing this trait.
+ * @property {string} [type]                              Whether this is a "physical" or "mental" trait.
+ * @property {Object<string, number|string>}  [defaults]  Default values for this trait based on actor type.
  *                                                        If a string is used, the system will attempt to fetch.
- *                                                        the value of the specified ability.
- * @property {string} [icon]                              An SVG icon that represents the ability.
+ *                                                        the value of the specified trait.
+ * @property {string} [icon]                              An SVG icon that represents the trait.
  */
 
 /**
- * The set of Ability Scores used within the system.
- * @enum {AbilityConfiguration}
+ * The set of Trait Scores used within the system.
+ * @enum {TraitConfiguration}
  */
 
-DAGGERHEART.abilities = {
+DAGGERHEART.traits = {
     agi : {
-        label       : "DAGGERHEART.AbilityAgi",
-        abbreviation: "DAGGERHEART.AbilityAgiAbbr",
+        label       : "DAGGERHEART.TraitAgi",
+        abbreviation: "DAGGERHEART.TraitAgiAbbr",
         type       : "physical",
         fullKey    : "agility",
         reference : "",
         icon: ""
     },
     str: {
-        label       : "DAGGERHEART.AbilityAgi",
-        abbreviation: "DAGGERHEART.AbilityStrAbbr",
+        label       : "DAGGERHEART.TraitAgi",
+        abbreviation: "DAGGERHEART.TraitStrAbbr",
         type       : "physical",
         fullKey    : "agility",
         reference : "",
         icon: ""
     },
     fin: {
-        label       : "DAGGERHEART.AbilityFin",
-        abbreviation: "DAGGERHEART.AbilityFinAbbr",
+        label       : "DAGGERHEART.TraitFin",
+        abbreviation: "DAGGERHEART.TraitFinAbbr",
         type       : "physical",
         fullKey    : "finesse",
         reference : "",
         icon: ""
     },
     ins: {
-        label       : "DAGGERHEART.AbilityIns",
-        abbreviation: "DAGGERHEART.AbilityInsAbbr",
+        label       : "DAGGERHEART.TraitIns",
+        abbreviation: "DAGGERHEART.TraitInsAbbr",
         type       : "mental",
         fullKey    : "instinct",
         reference : "",
         icon: ""
     },
     pre: {
-        label       : "DAGGERHEART.AbilityPre",
-        abbreviation: "DAGGERHEART.AbilityPreAbbr",
+        label       : "DAGGERHEART.TraitPre",
+        abbreviation: "DAGGERHEART.TraitPreAbbr",
         type       : "mental",
         fullKey    : "presence",
         reference : "",
         icon: ""
     },
     kno: {
-        label       : "DAGGERHEART.AbilityKno",
-        abbreviation: "DAGGERHEART.AbilityKnoAbbr",
+        label       : "DAGGERHEART.TraitKno",
+        abbreviation: "DAGGERHEART.TraitKnoAbbr",
         type       : "mental",
         fullKey    : "knowledge",
         reference : "",
         icon: ""
     }
 };
-preLocalize("abilities", {keys: ["label", "abbreviation"]});
+preLocalize("traits", {keys: ["label", "abbreviation"]});
 
 /* -------------------------------------------- */
 /*  Weapon Details                              */
@@ -166,14 +183,14 @@ DAGGERHEART.scalarTimePeriods = new Proxy(DAGGERHEART.timeUnits, {
 /* -------------------------------------------- */
 
 /**
- * 
- * Various ways in which an item or ability can be used.
- * 
+ *
+ * Various ways in which an item or trait can be used.
+ *
  * @enum {string}
- * 
- * preLocalize("abilityActivationTypes");
- * 
- * 
+ *
+ * preLocalize("traitActivationTypes");
+ *
+ *
  */
 
 /**
@@ -188,8 +205,8 @@ DAGGERHEART.scalarTimePeriods = new Proxy(DAGGERHEART.timeUnits, {
 /**
  * Configuration data for activation types on activities.
  * @enum {ActivityActivationTypeConfig}
- * 
- * 
+ *
+ *
  * preLocalize("activityActivationTypes", { key: "label" });
  */
 
@@ -457,7 +474,7 @@ preLocalize("itemRarity");
  */
 
 /**
- * Enumerate the lengths of time over which an item can have limited use ability.
+ * Enumerate the lengths of time over which an item can have limited use trait.
  * @enum {LimitedUsePeriodConfiguration}
  */
 
@@ -478,7 +495,7 @@ DAGGERHEART.limitedUsePeriods = {
         label: "DAGGERHEART.USES.Period.Dusk.label",
         abbreviation: "DAGGERHEART.USES.Period.Dusk.Abbreviation",
     },
-    session: {  
+    session: {
         label: "DAGGERHEART.USES.Period.Session.label",
         abbreviation: "DAGGERHEART.USES.Period.Session.Abbreviation",
         group: "special"
@@ -494,7 +511,7 @@ Object.defineProperty(DAGGERHEART.limitedUsePeriods, "recoveryOptions", {
                 value, label, group: game.i18n.localize(`DAGGERHEART.USES.Recovery.${type?.capitalize() ?? "Time"}`)
             })),
             {value: "recharge", label: game.i18n.localize("DAGGERHEART.USES.Recovery.Recharge") }
-            
+
         ];
     }
 });
@@ -536,18 +553,18 @@ preLocalize("damageThresholds", {key: "label"});
 
 DAGGERHEART.consumableTypes = {
     ammo: {
-        label: "DAGGERHEART.COMSUMABLE.Type.Ammunition.Label",
+        label: "DAGGERHEART.CONSUMABLE.Type.Ammunition.Label",
         subtypes: {
-            arrow: "DAGGERHEART.COMSUMABLE.Type.Ammunition.Arrow",
-            crossbowBolt: "DAGGERHEART.COMSUMABLE.Type.Ammunition.Bolt",
-            firearmBullet: "DAGGERHEART.COMSUMABLE.Type.Ammunition.BulletFirearm",
-            slingBullet: "DAGGERHEART.COMSUMABLE.Type.Ammunition.BulletSling",
+            arrow: "DAGGERHEART.CONSUMABLE.Type.Ammunition.Arrow",
+            crossbowBolt: "DAGGERHEART.CONSUMABLE.Type.Ammunition.Bolt",
+            firearmBullet: "DAGGERHEART.CONSUMABLE.Type.Ammunition.BulletFirearm",
+            slingBullet: "DAGGERHEART.CONSUMABLE.Type.Ammunition.BulletSling",
         },
         potion:{
-            label: "DAGGERHEART.COMSUMABLE.Type.Potion.Label",
+            label: "DAGGERHEART.CONSUMABLE.Type.Potion.Label",
         },
         food: {
-            label: "DAGGERHEART.COMSUMABLE.Type.Food.Label",
+            label: "DAGGERHEART.CONSUMABLE.Type.Food.Label",
         }
     }
 };
@@ -1315,7 +1332,7 @@ preLocalize("targetTypes", { sort: true });
  * @property {boolean} [SwapDomainCards] Can domain cards be swapped during this rest type?
  * @property {boolean} [TendWounds]   Is tending wounds an option for this rest type?
  * @property {string} [TendWoundsFormula]  Formula to use when tending wounds during this rest type.
- * @property {boolean} [ClearStress]  Is clearing rest an option for this rest type?         
+ * @property {boolean} [ClearStress]  Is clearing rest an option for this rest type?
  * @property {string} [ClearStressFormula]  Formula to use when clearing stress during this rest type.
  * @property {boolean} [RepairArmor]  Is repairing armor an option for this rest type?
  * @property {string} [RepairArmorFormula]  Formula to use when repairing armor during this rest type.
@@ -1367,7 +1384,7 @@ DAGGERHEART.restTypes = {
         RepairArmorFormula: "@attributes.armor.max",
         CanPrepare: true,
         WorkProject: true,
-    }    
+    }
 };
 preLocalize("restTypes", {key: "label"});
 

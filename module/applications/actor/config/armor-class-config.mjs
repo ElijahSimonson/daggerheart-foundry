@@ -46,8 +46,8 @@ export default class ArmorThresholdConfig extends BaseConfigSheet {
         const config = CONFIG.DAGGERHEART.armorThresholds[context.source.calc];
         context.formula = {
             disabled: context.source.calc !== "custom",
-            showFlat: ["flat", "natural"].includes(context.source.calc)
+            showFlat: ["flat", "natural"].includes(context.source.calc),
             value: (context.source.calc === "custom" ? context.source.formula : config?.formula) ?? ""
-        }
+        };
     }
 }
