@@ -5,6 +5,8 @@
 This game system for [Foundry Virtual Tabletop](http://foundryvtt.com) provides character sheet and game system
 support for the official release of Daggerheart.
 
+Game System is currently in development and is provided as is.
+
 This system provides character sheet support for Actors and Items, mechanical support for dice and rules necessary to
 play games of Daggerheart, and compendium content for Adversaries, Heroes, Items, Spells, Class Features, Adversary
 Features, and more!
